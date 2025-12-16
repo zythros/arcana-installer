@@ -5,25 +5,10 @@ set -eu
 # and customized Arch Linux system.
 # Copyright (C) 2022 picodotdev
 
-# Display the message
-echo -e "\nInstall packer, virtualbox, ... before continuing"
-echo -e "\nRun install-packer-extras.sh first"
-echo "(Press any key to continue)"
-
-# Wait for user input or timeout
-read -n 1 -s -t 5 key && pressed=true || pressed=false
-
-# Check if a key was pressed or timeout occurred
-if $pressed; then
-  echo "Key pressed. Continuing..."
-else
-  echo "No key pressed within 5 seconds. Proceeding automatically..."
-fi
-
 CONFIG_FILE="alis-packer.json"
 BRANCH="main"
 BRANCH_QUALIFIER=""
-CONFIG_FILE_SH="ariser-alis-config-efi-ext4-grub-xfce.sh"
+CONFIG_FILE_SH="alis-config-efi-ext4-systemd.sh"
 
 while getopts "b:c:" arg; do
   case $arg in

@@ -7,7 +7,7 @@ set -eu
 # and customized Arch Linux system.
 # Copyright (C) 2022 picodotdev
 
-GITHUB_USER="ariser-installer"
+GITHUB_USER="erikdubois"
 BRANCH="main"
 HASH=""
 ARTIFACT="alis-${BRANCH}"
