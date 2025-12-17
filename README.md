@@ -1,4 +1,4 @@
-# alis
+# Arcana based on alis scripts
 
 ![Arch Linux](https://raw.githubusercontent.com/picodotdev/alis/main/images/archlinux-badge.svg)
 ![Bash](https://raw.githubusercontent.com/picodotdev/alis/main/images/sh-bash-badge.svg)
