@@ -74,7 +74,6 @@ function sanitize_variables() {
     BOOTLOADER=$(sanitize_variable "$BOOTLOADER")
     PLYMOUTH_THEME=$(sanitize_variable "$PLYMOUTH_THEME")
     CUSTOM_SHELL=$(sanitize_variable "$CUSTOM_SHELL")
-    POST_INSTALL_SCRIPT=$(sanitize_variable "$POST_INSTALL_SCRIPT")
     DESKTOP_ENVIRONMENT=$(sanitize_variable "$DESKTOP_ENVIRONMENT")
     DISPLAY_MANAGER=$(sanitize_variable "$DISPLAY_MANAGER")
     SYSTEMD_UNITS=$(sanitize_variable "$SYSTEMD_UNITS")
@@ -1801,25 +1800,6 @@ function provision() {
     (cd "$PROVISION_DIRECTORY" && cp -vr --parents . "${MNT_DIR}")
 }
 
-function post_install_script() {
-    print_step "post_install_script()"
-
-    local REPO_URL="${POST_INSTALL_SCRIPT%:*}"
-    local SCRIPT_NAME="${POST_INSTALL_SCRIPT##*:}"
-    local REPO_NAME=$(basename "$REPO_URL" .git)
-
-    echo -e "${BLUE}Cloning ${REPO_URL} and running ${SCRIPT_NAME}${NC}"
-
-    arch-chroot "${MNT_DIR}" /bin/bash -c "
-        cd /home/${USER_NAME}
-        git clone ${REPO_URL} ${REPO_NAME}
-        chown -R ${USER_NAME}:${USER_NAME} ${REPO_NAME}
-        cd ${REPO_NAME}
-        chmod +x ${SCRIPT_NAME}
-        sudo -u ${USER_NAME} ./${SCRIPT_NAME}
-    "
-}
-
 function end() {
     echo ""
     echo -e "${GREEN}Arch Linux installed successfully"'!'"${NC}"
@@ -1982,9 +1962,6 @@ function main() {
     execute_step "packages"
     if [ "$PROVISION" == "true" ]; then
         execute_step "provision"
-    fi
-    if [ -n "$POST_INSTALL_SCRIPT" ]; then
-        execute_step "post_install_script"
     fi
     execute_step "systemd_units"
     local END_TIMESTAMP=$(date -u +"%F %T")
