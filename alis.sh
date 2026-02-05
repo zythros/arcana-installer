@@ -1804,7 +1804,7 @@ function provision() {
 function post_install_script() {
     print_step "post_install_script()"
 
-    local REPO_URL="${POST_INSTALL_SCRIPT%%:*}"
+    local REPO_URL="${POST_INSTALL_SCRIPT%:*}"
     local SCRIPT_NAME="${POST_INSTALL_SCRIPT##*:}"
     local REPO_NAME=$(basename "$REPO_URL" .git)
 
